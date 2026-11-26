@@ -1,0 +1,6 @@
+@startuml 23_bad_lane
+start
+|trainer
+:a · open;
+stop
+@enduml

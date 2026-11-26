@@ -1,0 +1,6 @@
+@startuml 05_unclosed_while
+start
+while (a · a step open?) is (yes)
+  :b · do it;
+stop
+@enduml

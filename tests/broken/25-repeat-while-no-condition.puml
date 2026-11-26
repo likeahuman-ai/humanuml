@@ -1,0 +1,7 @@
+@startuml 25_repeat_while_no_condition
+start
+repeat
+  :a · try;
+repeat while is (no)
+stop
+@enduml

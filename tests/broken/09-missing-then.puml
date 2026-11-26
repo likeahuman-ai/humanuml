@@ -1,0 +1,7 @@
+@startuml 09_missing_then
+start
+if (a · signed in?) (yes)
+  :b · open;
+endif
+stop
+@enduml

@@ -1,0 +1,7 @@
+@startuml 26_unclosed_note
+start
+:a · open;
+note right
+  text
+stop
+@enduml

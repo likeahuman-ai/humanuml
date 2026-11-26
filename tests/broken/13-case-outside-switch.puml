@@ -1,0 +1,6 @@
+@startuml 13_case_outside_switch
+start
+case (people)
+  :a · people;
+stop
+@enduml

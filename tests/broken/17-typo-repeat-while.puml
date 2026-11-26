@@ -1,0 +1,7 @@
+@startuml 17_typo_repeat_while
+start
+repeat
+  :a · try;
+repeat whle (b · done?) is (no) not (yes)
+stop
+@enduml

@@ -1,0 +1,6 @@
+@startuml 03_unclosed_if
+start
+if (a · signed in?) then (yes)
+  :b · open the app;
+stop
+@enduml

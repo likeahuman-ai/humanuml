@@ -1,0 +1,6 @@
+@startuml 06_unclosed_repeat
+start
+repeat
+  :a · enter the code;
+stop
+@enduml

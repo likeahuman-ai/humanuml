@@ -1,0 +1,7 @@
+@startuml 14_wrong_closer
+start
+while (a · open?) is (yes)
+  :b · do;
+endif
+stop
+@enduml

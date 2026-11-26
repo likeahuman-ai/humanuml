@@ -1,0 +1,21 @@
+@startuml coffee_order
+start
+:ARRIVE AT THE COUNTER;
+switch (a · what does the guest want?)
+case (espresso)
+  :b · pull a short shot;
+case (flat white)
+  :c · pull a double shot · steam the milk;
+case (filter)
+  :d · pour from the batch jug;
+case (tea)
+  :e · pick a tin · set the timer;
+case (something else)
+  :f · ask the guest for details;
+endswitch
+if (g · food as well?) then (yes)
+  :h · warm the pastry · plate it;
+endif
+:i · take the payment;
+stop
+@enduml

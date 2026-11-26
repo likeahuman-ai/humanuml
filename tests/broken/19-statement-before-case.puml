@@ -1,0 +1,9 @@
+@startuml 19_statement_before_case
+start
+switch (a · which?)
+:b · oops;
+case (x)
+  :c · x;
+endswitch
+stop
+@enduml

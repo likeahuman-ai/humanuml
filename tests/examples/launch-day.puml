@@ -1,0 +1,19 @@
+@startuml launch_day
+start
+:LAUNCH MORNING;
+fork
+  :a · publish the website;
+  :b · switch on the shop;
+fork again
+  :c · send the newsletter;
+  fork
+    :d · post on the first channel;
+  fork again
+    :e · post on the second channel;
+  fork again
+    :f · answer the first questions;
+  end fork
+end fork
+:g · count the first orders;
+stop
+@enduml

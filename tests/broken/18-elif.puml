@@ -1,0 +1,9 @@
+@startuml 18_elif
+start
+if (a · ok?) then (yes)
+  :b · go;
+elif (c · other?) then (yes)
+  :d · other;
+endif
+stop
+@enduml

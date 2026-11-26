@@ -1,0 +1,5 @@
+@startuml 15_backward_outside_repeat
+start
+backward :a · again;
+stop
+@enduml

@@ -1,0 +1,5 @@
+target/
+out/
+# real product flows of Like A Human: kept on the Mac, never published
+tests/fences/
+docs/contact-sheets/

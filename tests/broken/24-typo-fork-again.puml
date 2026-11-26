@@ -1,0 +1,9 @@
+@startuml 24_typo_fork_again
+start
+fork
+  :a · one;
+fork agin
+  :b · two;
+end fork
+stop
+@enduml

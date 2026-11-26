@@ -1,0 +1,8 @@
+@startuml 07_unclosed_fork
+start
+fork
+  :a · one;
+fork again
+  :b · two;
+stop
+@enduml

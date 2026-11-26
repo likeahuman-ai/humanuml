@@ -1,0 +1,9 @@
+@startuml 04_unclosed_switch
+start
+switch (a · which area?)
+case (people)
+  :b · people;
+case (workshops)
+  :c · workshops;
+stop
+@enduml

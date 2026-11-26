@@ -1,0 +1,5 @@
+@startuml 08_missing_semicolon_before_stmt
+start
+:a · open the app
+stop
+@enduml

@@ -1,0 +1,8 @@
+@startuml 16_typo_switch
+start
+swich (a · which?)
+case (x)
+  :b · x;
+endswitch
+stop
+@enduml

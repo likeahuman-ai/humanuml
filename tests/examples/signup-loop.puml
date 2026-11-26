@@ -1,0 +1,14 @@
+@startuml signup_loop
+start
+:a · open the sign-up page;
+while (b · is the form complete?) is (no)
+  :c · fill in the next field;
+  if (d · is the value valid?) then (no)
+    :e · show what is wrong;
+  elseif (f · is the value empty?) then (yes)
+    :g · mark the field as required;
+  endif
+endwhile (yes)
+:h · send the form;
+stop
+@enduml

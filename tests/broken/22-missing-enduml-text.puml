@@ -1,0 +1,4 @@
+@startuml 22_missing_enduml_text
+start
+:a · open;
+stop

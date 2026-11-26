@@ -1,0 +1,7 @@
+@startuml 20_end_if_two_words
+start
+if (a · ok?) then (yes)
+  :b · go;
+end if
+stop
+@enduml

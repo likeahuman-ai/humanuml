@@ -1,0 +1,11 @@
+@startuml 12_else_twice
+start
+if (a · ok?) then (yes)
+  :b · go;
+else (no)
+  :c · stop;
+else (maybe)
+  :d · wait;
+endif
+stop
+@enduml

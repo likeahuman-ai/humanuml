@@ -1,0 +1,28 @@
+01-typo-if	3	if (
+02-typo-endif	5	endif
+03-unclosed-if	3	endif
+04-unclosed-switch	3	endswitch
+05-unclosed-while	3	endwhile
+06-unclosed-repeat	3	repeat while
+07-unclosed-fork	3	end fork
+08-missing-semicolon-before-stmt	3	`;`
+09-missing-then	3	then
+10-missing-paren	3	(
+11-unclosed-paren	3	)
+12-else-twice	7	elseif
+13-case-outside-switch	3	switch
+14-wrong-closer	5	endwhile
+15-backward-outside-repeat	3	repeat
+16-typo-switch	3	switch
+17-typo-repeat-while	5	repeat while
+18-elif	5	elseif
+19-statement-before-case	4	case
+20-end-if-two-words	5	endif
+21-missing-startuml	1	@startuml
+22-missing-enduml-text	4	@enduml
+23-bad-lane	3	|
+24-typo-fork-again	5	fork again
+25-repeat-while-no-condition	5	(
+26-unclosed-note	4	end note
+27-endwhile-orphan	4	while
+28-empty-action	3	text

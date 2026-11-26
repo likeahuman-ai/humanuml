@@ -1,0 +1,5 @@
+@startuml 28_empty_action
+start
+:;
+stop
+@enduml

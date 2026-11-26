@@ -1,0 +1,7 @@
+@startuml 10_missing_paren
+start
+if a · signed in? then (yes)
+  :b · open;
+endif
+stop
+@enduml

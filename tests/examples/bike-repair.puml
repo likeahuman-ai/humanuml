@@ -1,0 +1,22 @@
+@startuml bike_repair
+|customer|
+start
+:a · bring the bike to the shop;
+|mechanic|
+:b · look at the bike · write the quote;
+|customer|
+if (c · accept the quote?) then (yes)
+  |mechanic|
+  repeat
+    :d · repair one part;
+  backward :e · order the missing part · wait for it;
+  repeat while (f · every part fixed?) is (no) not (yes)
+  :g · test ride;
+  |customer|
+  :h · pick up the bike · pay;
+else (no)
+  :i · take the bike home;
+  end
+endif
+stop
+@enduml

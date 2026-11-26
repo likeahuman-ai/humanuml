@@ -1,0 +1,7 @@
+@startuml 01_typo_if
+start
+iff (a · signed in?) then (yes)
+  :b · open the app;
+endif
+stop
+@enduml
