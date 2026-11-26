@@ -1,0 +1,24 @@
+@startuml claim_invite
+|guest|
+start
+:a · open the link from the mail · ⤳ src/routes/claim.ts:12;
+:b · preview before sign-in [new] · title, date and first name · ⚠ never show the address · ⤳ src/queries/invites.ts:75;
+if (c · signed in?) then (no)
+  :d · sign in or create an account · FL-1.4;
+endif
+|server|
+:e · look up the code · two point lookups, no scan · ⤳ src/commands/invites.ts:701;
+switch (f · is the code valid?)
+case (yes)
+  :g · bind the account to the invite [fix] · event: invite.claimed · ⤳ src/model/identity.ts:425;
+case (used)
+  :h · say who used it and when [copy];
+  end
+case (expired)
+  :i · offer to ask for a new one [human] · FL-1.2;
+  end
+endswitch
+|guest|
+:j · the welcome screen [wk 48] · FL-1.5;
+stop
+@enduml

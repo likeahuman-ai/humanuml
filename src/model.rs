@@ -335,6 +335,24 @@ impl Model {
                 if n.backward {
                     o.push(("backward".into(), Json::Bool(true)));
                 }
+                if n.kind == "action" || n.kind == "decision" {
+                    let m = crate::marks::parse(&n.text);
+                    if !m.status.is_empty() {
+                        o.push(("status".into(), Json::Arr(m.status.iter().map(|x| Json::str(x.clone())).collect())));
+                    }
+                    if !m.cites.is_empty() {
+                        o.push(("cites".into(), Json::Arr(m.cites.iter().map(|c| Json::str(match &c.line { Some(l) => format!("{}:{}", c.path, l), None => c.path.clone() })).collect())));
+                    }
+                    if !m.pitfalls.is_empty() {
+                        o.push(("pitfalls".into(), Json::Arr(m.pitfalls.iter().map(|x| Json::str(x.clone())).collect())));
+                    }
+                    if !m.events.is_empty() {
+                        o.push(("events".into(), Json::Arr(m.events.iter().map(|x| Json::str(x.clone())).collect())));
+                    }
+                    if !m.refs.is_empty() {
+                        o.push(("refs".into(), Json::Arr(m.refs.iter().map(|x| Json::str(x.clone())).collect())));
+                    }
+                }
                 o.push(("line".into(), Json::int(n.line)));
                 o.push(("col".into(), Json::int(n.col)));
                 Json::Obj(o)

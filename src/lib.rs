@@ -6,7 +6,9 @@
 pub mod ast;
 pub mod font;
 pub mod layout;
+pub mod marks;
 pub mod svg;
+pub mod tree;
 pub mod json;
 pub mod model;
 pub mod parser;

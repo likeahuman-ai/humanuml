@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 534.6 611" width="534.6" height="611" font-family="&apos;Libre Franklin&apos;, &apos;Helvetica Neue&apos;, Helvetica, Arial, sans-serif" data-diagram="signup_loop" data-theme="soft">
+<defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1.5 L9 5 L1 8.5" fill="none" stroke="#6A87AD" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker><filter id="lift" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#12345A" flood-opacity="0.13"/></filter></defs>
+<rect width="534.6" height="611" fill="#FFF8E7"/>
+<g fill="none" stroke="#6A87AD" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M238.1 54 L238.1 76" marker-end="url(#arr)"/>
+<path d="M238.1 107 L238.1 129" marker-end="url(#arr)"/>
+<path d="M238.1 161 L238.1 190" marker-end="url(#arr)"/>
+<path d="M238.1 448 L238.1 456 Q238.1 464 230.1 464 L64 464 Q54 464 54 454 L54 155 Q54 145 64 145 L150.4 145" marker-end="url(#arr)"/>
+<path d="M325.7 145 L453.4 145 Q463.4 145 463.4 155 L463.4 474 Q463.4 484 453.4 484 L238.1 484"/>
+<path d="M238.1 221 L238.1 243" marker-end="url(#arr)"/>
+<path d="M160 259 L152.4 259 Q144.7 259 144.7 266.7 L144.7 304" marker-end="url(#arr)"/>
+<path d="M316.1 259 L323.7 259 Q331.4 259 331.4 266.7 L331.4 304" marker-end="url(#arr)"/>
+<path d="M331.4 336 L331.4 365" marker-end="url(#arr)"/>
+<path d="M411.8 320 L435.4 320 Q445.4 320 445.4 330 L445.4 365"/>
+<path d="M331.4 396 L331.4 416"/>
+<path d="M445.4 365 L445.4 406 Q445.4 416 435.4 416 L331.4 416"/>
+<path d="M144.7 335 L144.7 432 Q144.7 442 154.7 442 L238.1 442"/>
+<path d="M331.4 422 L331.4 432 Q331.4 442 321.4 442 L238.1 442"/>
+<path d="M238.1 484 L238.1 506" marker-end="url(#arr)"/>
+<path d="M238.1 537 L238.1 559" marker-end="url(#arr)"/>
+</g>
+<g class="node start" data-node="n1"><circle cx="238.1" cy="46" r="8" fill="#12345A"/></g>
+<g class="node action" data-node="a"><rect x="158" y="76" width="160.1" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="238.1" y="95"><tspan font-weight="700" fill="#12345A">a</tspan> · open the sign-up page</tspan></text></g>
+<g class="node decision" data-node="b"><rect x="150.4" y="129" width="175.4" height="32" rx="16" fill="#DEFEB3" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#12345A"><tspan x="238.1" y="148.5"><tspan font-weight="700" fill="#12345A">b</tspan> · is the form complete?</tspan></text></g>
+<text class="label" font-size="11" font-weight="600" fill="#46576A"><tspan x="243.1" y="184">no</tspan></text>
+<text class="label" font-size="11" font-weight="600" fill="#46576A"><tspan x="330.7" y="139">yes</tspan></text>
+<g class="node action" data-node="c"><rect x="170.4" y="190" width="135.4" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="238.1" y="209"><tspan font-weight="700" fill="#12345A">c</tspan> · fill in the next field</tspan></text></g>
+<g class="node decision" data-node="d"><rect x="160" y="243" width="156.1" height="32" rx="16" fill="#DEFEB3" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#12345A"><tspan x="238.1" y="262.5"><tspan font-weight="700" fill="#12345A">d</tspan> · is the value valid?</tspan></text></g>
+<text class="label" font-size="11" font-weight="600" fill="#46576A"><tspan x="149.7" y="298">no</tspan></text>
+<g class="node action" data-node="e"><rect x="72" y="304" width="145.4" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="144.7" y="323"><tspan font-weight="700" fill="#12345A">e</tspan> · show what is wrong</tspan></text></g>
+<g class="node decision" data-node="f"><rect x="251" y="304" width="160.7" height="32" rx="16" fill="#DEFEB3" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#12345A"><tspan x="331.4" y="323.5"><tspan font-weight="700" fill="#12345A">f</tspan> · is the value empty?</tspan></text></g>
+<text class="label" font-size="11" font-weight="600" fill="#46576A"><tspan x="336.4" y="359">yes</tspan></text>
+<g class="node action" data-node="g"><rect x="243.4" y="365" width="176.1" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="331.4" y="384"><tspan font-weight="700" fill="#12345A">g</tspan> · mark the field as required</tspan></text></g>
+<circle class="merge" cx="331.4" cy="416" r="4" fill="#12345A"/>
+<circle class="merge" cx="238.1" cy="442" r="4" fill="#12345A"/>
+<g class="node action" data-node="h"><rect x="181" y="506" width="114" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="238.1" y="525"><tspan font-weight="700" fill="#12345A">h</tspan> · send the form</tspan></text></g>
+<g class="node stop" data-node="n10"><circle cx="238.1" cy="570" r="10" fill="none" stroke="#12345A" stroke-width="1.8"/><circle cx="238.1" cy="570" r="5.5" fill="#12345A"/></g>
+</svg>

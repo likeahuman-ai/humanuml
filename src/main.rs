@@ -7,7 +7,8 @@ const USAGE: &str = "humanuml: flow diagrams as plain text
 usage:
   humanuml check <files>...      parse; errors by line and column, with hints
   humanuml json <file>           the parsed flow as JSON
-  humanuml render <file> -o out.svg [--theme classic|soft|navy|ink]
+  humanuml tree <file>            the flow as a text tree, with its marks
+  humanuml render <file> -o out.svg [--theme soft|navy|ink|classic]
 
 A file is a .puml file or a .md file with ```plantuml fences.";
 
@@ -17,6 +18,7 @@ fn main() -> ExitCode {
         Some("check") => check(&args[1..]),
         Some("json") => json(&args[1..]),
         Some("render") => render(&args[1..]),
+        Some("tree") => tree(&args[1..]),
         _ => {
             eprintln!("{}", USAGE);
             ExitCode::from(2)
@@ -91,7 +93,7 @@ fn json(files: &[String]) -> ExitCode {
 fn render(args: &[String]) -> ExitCode {
     let mut files = vec![];
     let mut out = None;
-    let mut theme = String::from("classic");
+    let mut theme = String::from("soft");
     let mut i = 0;
     while i < args.len() {
         if args[i] == "-o" {
@@ -154,4 +156,27 @@ fn render(args: &[String]) -> ExitCode {
         }
     }
     if failed > 0 { ExitCode::from(1) } else { ExitCode::SUCCESS }
+}
+
+fn tree(files: &[String]) -> ExitCode {
+    let Some(f) = files.first() else {
+        eprintln!("{}", USAGE);
+        return ExitCode::from(2);
+    };
+    let text = match std::fs::read_to_string(f) {
+        Ok(t) => t,
+        Err(e) => {
+            eprintln!("{}: cannot read: {}", f, e);
+            return ExitCode::from(1);
+        }
+    };
+    for c in chunks(f, &text) {
+        let p = parse(&Source { text: &c.text, line_offset: c.line_offset });
+        for e in &p.errors {
+            eprint!("{}", format_diagnostic(f, e));
+        }
+        let Some(d) = p.diagram else { return ExitCode::from(1) };
+        println!("{}", humanuml::tree::tree(&d));
+    }
+    ExitCode::SUCCESS
 }

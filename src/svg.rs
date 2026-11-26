@@ -62,6 +62,8 @@ pub struct Theme {
     pub label: &'static str,
     pub merge_fill: &'static str,
     pub bar: &'static str,
+    pub dark: bool,
+    pub link: &'static str,
 }
 
 impl Theme {
@@ -100,6 +102,8 @@ impl Theme {
             label: "#444444",
             merge_fill: "#ffffff",
             bar: "#333333",
+            dark: false,
+            link: "#12345A",
         };
         Some(match n {
             "classic" => base,
@@ -167,6 +171,8 @@ impl Theme {
                 label: "#9FB3C8",
                 merge_fill: "#DEFEB3",
                 bar: "#DEFEB3",
+                dark: true,
+                link: "#A3D2FF",
                 ..base
             },
             // editorial: white page, hairlines, no fill, one lime mark per decision
@@ -238,7 +244,7 @@ fn path_d(pts: &[(f64, f64)], r: f64) -> String {
 }
 
 pub fn render(model: &Model, d: &Diagram) -> String {
-    render_with(model, d, &Theme::named("classic").unwrap())
+    render_with(model, d, &Theme::named("soft").unwrap())
 }
 
 pub fn render_with(model: &Model, d: &Diagram, th: &Theme) -> String {
@@ -380,7 +386,7 @@ pub fn render_with(model: &Model, d: &Diagram, th: &Theme) -> String {
                 let fill = if back { th.back_fill } else { th.card_fill };
                 let (lc, lw) = if back && th.card_line == "none" { ("#6A87AD", 1.2) } else { (th.card_line, th.card_w) };
                 s.push_str(&format!("<g class=\"{}\"{}><rect x=\"{}\" y=\"{}\" width=\"{}\" height=\"{}\" rx=\"{}\" fill=\"{}\" {}{}{}/>", cls, attr, f(cx - it.w / 2.0), f(y), f(it.w), f(it.h), f(th.card_r), fill, stroke_of(lc, lw), dash, if back { "" } else { filt }));
-                text_block(&mut s, &it.lines, cx, y, it.h, th, th.text);
+                text_block(&mut s, it, cx, y, it.h, th, th.text);
                 s.push_str("</g>\n");
             }
             Shape::Decision => {
@@ -397,7 +403,7 @@ pub fn render_with(model: &Model, d: &Diagram, th: &Theme) -> String {
                     }
                 };
                 s.push_str(&format!("<g class=\"node decision\"{}>{}", attr, shape));
-                text_block(&mut s, &it.lines, cx, y, h, th, th.dec_text);
+                text_block(&mut s, it, cx, y, h, th, th.dec_text);
                 s.push_str("</g>\n");
             }
             Shape::Label => {
@@ -424,20 +430,90 @@ fn split_key_line(l: &str) -> Option<(&str, &str)> {
     }
 }
 
-fn text_block(s: &mut String, lines: &[String], cx: f64, y: f64, h: f64, th: &Theme, fill: &str) {
-    let n = lines.len() as f64;
-    let y0 = y + (h - n * LH) / 2.0;
+/// Colours of a status chip: (fill, text).
+fn chip_colors(st: &str, dark: bool) -> (&'static str, &'static str) {
+    let light = match st {
+        "new" => ("#DEFEB3", "#12345A"),
+        "fix" => ("#FFEBE8", "#7E2924"),
+        "v2" | "live" => ("#D8FBDC", "#165927"),
+        "copy" => ("#E6F1FF", "#274C76"),
+        "human" => ("#F0E8D8", "#12345A"),
+        s if s.starts_with("wk") => ("#FFEED0", "#614502"),
+        _ => ("#F0E8D8", "#46576A"),
+    };
+    if !dark {
+        return light;
+    }
+    match st {
+        "new" => ("#DEFEB3", "#12345A"),
+        "fix" => ("#5A2424", "#E88F8F"),
+        "v2" | "live" => ("#1D3D2C", "#7FC79A"),
+        "copy" => ("#1B3352", "#8FBCE4"),
+        s if s.starts_with("wk") => ("#3D321A", "#E4C57E"),
+        _ => ("#12345A", "#C7D4E2"),
+    }
+}
+
+/// The FL ids in a line become links to the drawing of that record.
+fn line_spans(l: &str, th: &Theme) -> String {
+    let mut out = String::new();
+    let mut last = 0;
+    for (a, b) in crate::marks::refs_in(l) {
+        out.push_str(&esc(&l[last..a]));
+        let id = &l[a..b];
+        out.push_str(&format!(
+            "<a href=\"{}.svg\" class=\"ref\" data-ref=\"{}\"><tspan fill=\"{}\" text-decoration=\"underline\">{}</tspan></a>",
+            id.replace('.', "_"), id, th.link, esc(id)
+        ));
+        last = b;
+    }
+    out.push_str(&esc(&l[last..]));
+    out
+}
+
+fn text_block(s: &mut String, it: &Item, cx: f64, y: f64, h: f64, th: &Theme, fill: &str) {
+    let lines = &it.lines;
+    let total = content_h(lines.len(), it.extras.len(), !it.chips.is_empty());
+    let mut yy = y + (h - total) / 2.0;
+    if !it.chips.is_empty() {
+        let cw: f64 = it.chips.iter().map(|c| chip_w(c) + 4.0).sum::<f64>() - 4.0;
+        let mut x = cx - cw / 2.0;
+        for c in &it.chips {
+            let w = chip_w(c);
+            let (bg, fg) = chip_colors(c, th.dark);
+            s.push_str(&format!(
+                "<g class=\"chip\" data-status=\"{}\"><rect x=\"{}\" y=\"{}\" width=\"{}\" height=\"{}\" rx=\"{}\" fill=\"{}\"/><text x=\"{}\" y=\"{}\" text-anchor=\"middle\" font-size=\"{}\" font-weight=\"700\" letter-spacing=\"0.6\" fill=\"{}\">{}</text></g>",
+                esc(c), f(x), f(yy), f(w), f(CHIP_H), f(CHIP_H / 2.0), bg, f(x + w / 2.0), f(yy + 10.5), f(CHIP_FS), fg, esc(&c.to_uppercase())
+            ));
+            x += w + 4.0;
+        }
+        yy += CHIP_H + 5.0;
+    }
     s.push_str(&format!("<text text-anchor=\"middle\" font-size=\"{}\" fill=\"{}\">", f(FS), fill));
     for (i, l) in lines.iter().enumerate() {
-        let yy = f(y0 + i as f64 * LH + 11.0);
+        let ly = f(yy + i as f64 * LH + 11.0);
         match (i, split_key_line(l)) {
             (0, Some((k, rest))) if th.key_bold => {
-                s.push_str(&format!("<tspan x=\"{}\" y=\"{}\"><tspan font-weight=\"700\" fill=\"{}\">{}</tspan>{}</tspan>", f(cx), yy, th.key, esc(k), esc(&format!(" {}", rest))));
+                s.push_str(&format!("<tspan x=\"{}\" y=\"{}\"><tspan font-weight=\"700\" fill=\"{}\">{}</tspan>{}</tspan>", f(cx), ly, th.key, esc(k), line_spans(&format!(" {}", rest), th)));
             }
-            _ => s.push_str(&format!("<tspan x=\"{}\" y=\"{}\">{}</tspan>", f(cx), yy, esc(l))),
+            _ => s.push_str(&format!("<tspan x=\"{}\" y=\"{}\">{}</tspan>", f(cx), ly, line_spans(l, th))),
         }
     }
     s.push_str("</text>");
+    let base = yy + lines.len() as f64 * LH;
+    for (j, (kind, l)) in it.extras.iter().enumerate() {
+        let ly = f(base + j as f64 * LH + 11.0);
+        match kind {
+            Extra::Pitfall => s.push_str(&format!(
+                "<text class=\"pitfall\" x=\"{}\" y=\"{}\" text-anchor=\"middle\" font-size=\"{}\" font-weight=\"600\" fill=\"{}\">{}</text>",
+                f(cx), ly, f(FS), if th.dark { "#E4C57E" } else { "#8A5A00" }, line_spans(l, th)
+            )),
+            Extra::Cite | Extra::Event => s.push_str(&format!(
+                "<text class=\"{}\" x=\"{}\" y=\"{}\" text-anchor=\"middle\" font-family=\"'Space Mono', Menlo, monospace\" font-size=\"{}\" fill=\"{}\">{}</text>",
+                if *kind == Extra::Cite { "cite" } else { "event" }, f(cx), ly, f(MONO_FS), th.label, esc(l)
+            )),
+        }
+    }
 }
 
 /// The derived overview: boxes in columns by the first number of the id, lines between them.

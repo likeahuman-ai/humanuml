@@ -9,6 +9,7 @@
 
 use crate::ast::*;
 use crate::font::{text_width, wrap};
+use crate::marks;
 use crate::model::Model;
 use std::collections::HashMap;
 
@@ -51,6 +52,69 @@ pub struct Item {
     pub h: f64,
     pub lines: Vec<String>,
     pub id: Option<String>,
+    /// Lines under the text: a pitfall, a citation, an event (from the marks).
+    pub extras: Vec<(Extra, String)>,
+    /// Status chips above the text.
+    pub chips: Vec<String>,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum Extra {
+    Pitfall,
+    Cite,
+    Event,
+}
+
+pub const CHIP_H: f64 = 15.0;
+pub const CHIP_FS: f64 = 9.0;
+pub const MONO_FS: f64 = 10.5;
+
+/// Width of a chip: uppercase label plus padding.
+pub fn chip_w(s: &str) -> f64 {
+    text_width(&s.to_uppercase(), CHIP_FS) * 1.08 + 12.0
+}
+
+/// Width of a line in the mono face (citations, events).
+pub fn mono_w(s: &str) -> f64 {
+    s.chars().count() as f64 * 0.6 * MONO_FS
+}
+
+/// The text of a node, split by its marks, wrapped to `max`.
+pub fn content(text: &str, max: f64) -> (Vec<String>, Vec<(Extra, String)>, Vec<String>, f64) {
+    let m = marks::parse(text);
+    let lines = wrap(&m.text, FS, max);
+    let mut w = lines.iter().map(|l| text_width(l, FS)).fold(0.0, f64::max);
+    let mut extras = vec![];
+    for p in &m.pitfalls {
+        for (i, l) in wrap(&format!("\u{26a0} {}", p), FS, max).into_iter().enumerate() {
+            let _ = i;
+            w = w.max(text_width(&l, FS));
+            extras.push((Extra::Pitfall, l));
+        }
+    }
+    for c in &m.cites {
+        let base = c.path.rsplit('/').next().unwrap_or(&c.path);
+        let l = match &c.line {
+            Some(n) => format!("\u{2933} {}:{}", base, n),
+            None => format!("\u{2933} {}", base),
+        };
+        w = w.max(mono_w(&l));
+        extras.push((Extra::Cite, l));
+    }
+    for e in &m.events {
+        let l = format!("event: {}", e);
+        w = w.max(mono_w(&l));
+        extras.push((Extra::Event, l));
+    }
+    let chips = m.status.clone();
+    let cw: f64 = chips.iter().map(|c| chip_w(c) + 4.0).sum();
+    w = w.max(cw);
+    (lines, extras, chips, w)
+}
+
+/// Height of the text area of a node.
+pub fn content_h(lines: usize, extras: usize, chips: bool) -> f64 {
+    (lines + extras) as f64 * LH + if chips { CHIP_H + 5.0 } else { 0.0 }
 }
 
 #[derive(Clone, Debug)]
@@ -169,13 +233,18 @@ impl<'a> Lay<'a> {
     }
 
     fn leaf(&self, shape: Shape, w: f64, h: f64, lines: Vec<String>, id: Option<String>, terminal: bool) -> Blk {
+        self.leaf_x(shape, w, h, lines, id, terminal, vec![], vec![])
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn leaf_x(&self, shape: Shape, w: f64, h: f64, lines: Vec<String>, id: Option<String>, terminal: bool, extras: Vec<(Extra, String)>, chips: Vec<String>) -> Blk {
         let lane = self.cur;
         let mut ext = self.new_ext();
         ext[lane] = Some((w / 2.0, w / 2.0));
         Blk {
             h,
             ext,
-            items: vec![Item { shape, lane, dx: 0.0, y: 0.0, w, h, lines, id }],
+            items: vec![Item { shape, lane, dx: 0.0, y: 0.0, w, h, lines, id, extras, chips }],
             edges: vec![],
             entry: Port { lane, dx: 0.0, y: 0.0 },
             exit: if terminal { None } else { Some(Port { lane, dx: 0.0, y: h }) },
@@ -183,19 +252,17 @@ impl<'a> Lay<'a> {
     }
 
     fn action(&self, text: &str, id: Option<String>, shape: Shape) -> Blk {
-        let lines = wrap(text, FS, ACTION_MAX);
-        let tw = lines.iter().map(|l| text_width(l, FS)).fold(0.0, f64::max);
-        let w = (tw + 22.0).max(44.0);
-        let h = lines.len() as f64 * LH + 14.0;
-        self.leaf(shape, w, h, lines, id, false)
+        let (lines, extras, chips, tw) = content(text, ACTION_MAX);
+        let w = (tw + 24.0).max(44.0);
+        let h = content_h(lines.len(), extras.len(), !chips.is_empty()) + 16.0;
+        self.leaf_x(shape, w, h, lines, id, false, extras, chips)
     }
 
     fn decision_item(&self, text: &str, id: Option<String>) -> Item {
-        let lines = wrap(text, FS, DECISION_MAX);
-        let tw = lines.iter().map(|l| text_width(l, FS)).fold(0.0, f64::max);
+        let (lines, extras, chips, tw) = content(text, DECISION_MAX);
         let w = tw + 2.0 * 22.0;
-        let h = (lines.len() as f64 * LH + 16.0).max(32.0);
-        Item { shape: Shape::Decision, lane: self.cur, dx: 0.0, y: 0.0, w, h, lines, id }
+        let h = (content_h(lines.len(), extras.len(), !chips.is_empty()) + 16.0).max(32.0);
+        Item { shape: Shape::Decision, lane: self.cur, dx: 0.0, y: 0.0, w, h, lines, id, extras, chips }
     }
 
     fn append(&self, mut a: Blk, mut b: Blk) -> Blk {
@@ -339,7 +406,7 @@ impl<'a> Lay<'a> {
             edges.push(Edge::Fan { dec: Port { lane: dl, dx: 0.0, y: 0.0 }, dw, dh, to: b.entry, bus_y, arrow: !empty });
             if !labels[i].is_empty() {
                 let nl = labels[i].len() as f64;
-                items.push(Item { shape: Shape::Label, lane: b.entry.lane, dx: b.entry.dx + 5.0, y: b.entry.y - 3.0 - nl * LLH, w: 0.0, h: nl * LLH, lines: labels[i].clone(), id: None });
+                items.push(Item { shape: Shape::Label, lane: b.entry.lane, dx: b.entry.dx + 5.0, y: b.entry.y - 3.0 - nl * LLH, w: 0.0, h: nl * LLH, lines: labels[i].clone(), id: None, extras: vec![], chips: vec![] });
             }
             bottom = bottom.max(b.h);
             if let Some(e) = b.exit {
@@ -354,7 +421,7 @@ impl<'a> Lay<'a> {
             for e in &exits {
                 edges.push(Edge::Flow { from: *e, to: Port { lane: dl, dx: 0.0, y: y_m + 6.0 }, ymid: Some(y_m + 6.0), arrow: false });
             }
-            items.push(Item { shape: Shape::Merge, lane: dl, dx: 0.0, y: y_m, w: 12.0, h: 12.0, lines: vec![], id: None });
+            items.push(Item { shape: Shape::Merge, lane: dl, dx: 0.0, y: y_m, w: 12.0, h: 12.0, lines: vec![], id: None, extras: vec![], chips: vec![] });
             ext_add(&mut ext, dl, 6.0, 6.0);
             exit = Some(Port { lane: dl, dx: 0.0, y: y_m + 12.0 });
             h = y_m + 12.0;
@@ -396,7 +463,7 @@ impl<'a> Lay<'a> {
         let mut edges = vec![Edge::Flow { from: Port { lane: dl, dx: 0.0, y: dh }, to: b.entry, ymid: None, arrow: true }];
         if !is_lines.is_empty() {
             let nl = is_lines.len() as f64;
-            items.push(Item { shape: Shape::Label, lane: b.entry.lane, dx: b.entry.dx + 5.0, y: b.entry.y - 3.0 - nl * LLH, w: 0.0, h: nl * LLH, lines: is_lines.clone(), id: None });
+            items.push(Item { shape: Shape::Label, lane: b.entry.lane, dx: b.entry.dx + 5.0, y: b.entry.y - 3.0 - nl * LLH, w: 0.0, h: nl * LLH, lines: is_lines.clone(), id: None, extras: vec![], chips: vec![] });
             let lw = is_lines.iter().map(|l| text_width(l, LFS)).fold(0.0, f64::max);
             ext_add(&mut ext, b.entry.lane, 0.0, 7.0 + lw);
         }
@@ -423,7 +490,7 @@ impl<'a> Lay<'a> {
         edges.push(Edge::Poly { pts: vec![Port { lane: dl, dx: dw / 2.0, y: ymid_dec }, Port { lane: rm, dx: rightx, y: ymid_dec }, Port { lane: rm, dx: rightx, y: y_end }, Port { lane: dl, dx: 0.0, y: y_end }], arrow: false });
         if !end_lines.is_empty() {
             let nl = end_lines.len() as f64;
-            items.push(Item { shape: Shape::Label, lane: dl, dx: dw / 2.0 + 5.0, y: ymid_dec - 3.0 - nl * LLH, w: 0.0, h: nl * LLH, lines: end_lines, id: None });
+            items.push(Item { shape: Shape::Label, lane: dl, dx: dw / 2.0 + 5.0, y: ymid_dec - 3.0 - nl * LLH, w: 0.0, h: nl * LLH, lines: end_lines, id: None, extras: vec![], chips: vec![] });
         }
         items.extend(std::mem::take(&mut b.items));
         edges.extend(std::mem::take(&mut b.edges));
@@ -464,7 +531,7 @@ impl<'a> Lay<'a> {
             let (bw, bh) = (bb.items[0].w, bb.items[0].h);
             let cx = rightx + bw / 2.0;
             let ybox = ((ydm + top) / 2.0 - bh / 2.0).max(0.0);
-            items.push(Item { shape: Shape::BackAction, lane: rm, dx: cx, y: ybox, w: bw, h: bh, lines: bb.items[0].lines.clone(), id: bb.items[0].id.clone() });
+            items.push(Item { shape: Shape::BackAction, lane: rm, dx: cx, y: ybox, w: bw, h: bh, lines: bb.items[0].lines.clone(), id: bb.items[0].id.clone(), extras: bb.items[0].extras.clone(), chips: bb.items[0].chips.clone() });
             ext_add(&mut ext, rm, 0.0, cx + bw / 2.0 + 6.0);
             edges.push(Edge::Poly { pts: vec![Port { lane: dl, dx: dw / 2.0, y: ydm }, Port { lane: rm, dx: cx, y: ydm }, Port { lane: rm, dx: cx, y: ybox + bh }], arrow: true });
             edges.push(Edge::Poly { pts: vec![Port { lane: rm, dx: cx, y: ybox }, Port { lane: rm, dx: cx, y: top }, Port { lane: entry.lane, dx: 0.0, y: top }, Port { lane: entry.lane, dx: 0.0, y: 0.0 }], arrow: true });
@@ -475,7 +542,7 @@ impl<'a> Lay<'a> {
         }
         if !is_lines.is_empty() {
             let nl = is_lines.len() as f64;
-            items.push(Item { shape: Shape::Label, lane: dl, dx: dw / 2.0 + 5.0, y: ydm - 3.0 - nl * LLH, w: 0.0, h: nl * LLH, lines: is_lines, id: None });
+            items.push(Item { shape: Shape::Label, lane: dl, dx: dw / 2.0 + 5.0, y: ydm - 3.0 - nl * LLH, w: 0.0, h: nl * LLH, lines: is_lines, id: None, extras: vec![], chips: vec![] });
         }
         let not_lines = match not_label {
             Some(l) if !l.is_empty() => wrap(l, LFS, LABEL_MAX),
@@ -485,7 +552,7 @@ impl<'a> Lay<'a> {
         let y_exit = yd + dh + 14.0 + nl * LLH;
         if !not_lines.is_empty() {
             let lw = not_lines.iter().map(|l| text_width(l, LFS)).fold(0.0, f64::max);
-            items.push(Item { shape: Shape::Label, lane: dl, dx: 5.0, y: yd + dh + 2.0, w: 0.0, h: nl * LLH, lines: not_lines, id: None });
+            items.push(Item { shape: Shape::Label, lane: dl, dx: 5.0, y: yd + dh + 2.0, w: 0.0, h: nl * LLH, lines: not_lines, id: None, extras: vec![], chips: vec![] });
             ext_add(&mut ext, dl, 0.0, 7.0 + lw);
         }
         edges.push(Edge::Poly { pts: vec![Port { lane: dl, dx: 0.0, y: yd + dh }, Port { lane: dl, dx: 0.0, y: y_exit }], arrow: false });

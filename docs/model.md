@@ -26,7 +26,14 @@
 | `parent` | The id of the decision or fork that holds this node, or `null` at the top level. |
 | `branch` | The branch of the parent: `then`, `elseif`, `else`, `case`, `body`, `backward`, `branch`. |
 | `backward` | `true` on the `backward :text;` action of a `repeat`. |
+| `status` | The status marks in the text: `["new"]`. Only on actions and decisions, only when present. |
+| `cites` | The citations `⤳ path:line` in the text: `["src/queries/invites.ts:75"]`. |
+| `pitfalls` | The parts after `⚠`. |
+| `events` | The names after `event:`. |
+| `refs` | The flow ids in the text: `["FL-1.4"]`. |
 | `line`, `col` | Source position, 1-based. For a fence inside a `.md` file the line is the line of the file. |
+
+The marks stay in `text` as written. Their notation: `src/marks.rs`.
 
 A `repeat` decision stands at the line of `repeat`; its condition text comes from `repeat while`.
 A `join` node closes a `fork` (it only exists when at least one branch does not end).

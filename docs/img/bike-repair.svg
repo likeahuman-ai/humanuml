@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850.3 565" width="850.3" height="565" font-family="&apos;Libre Franklin&apos;, &apos;Helvetica Neue&apos;, Helvetica, Arial, sans-serif" data-diagram="bike_repair" data-theme="soft">
+<defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1.5 L9 5 L1 8.5" fill="none" stroke="#6A87AD" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker><filter id="lift" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#12345A" flood-opacity="0.13"/></filter></defs>
+<rect width="850.3" height="565" fill="#FFF8E7"/>
+<g class="lane" data-lane="customer"><rect x="24" y="24" width="361.5" height="523" rx="18" fill="#FFFDF6" stroke="#E8DCC8"/><rect x="34" y="32" width="341.5" height="18" rx="9" fill="#12345A"/><text x="204.7" y="45" text-anchor="middle" font-size="11" font-weight="700" letter-spacing="1.2" fill="#FFF8E7">CUSTOMER</text></g>
+<g class="lane" data-lane="mechanic"><rect x="395.5" y="24" width="430.8" height="523" rx="18" fill="#F8F0DD" stroke="#E8DCC8"/><rect x="405.5" y="32" width="410.8" height="18" rx="9" fill="#12345A"/><text x="610.9" y="45" text-anchor="middle" font-size="11" font-weight="700" letter-spacing="1.2" fill="#FFF8E7">MECHANIC</text></g>
+<g fill="none" stroke="#6A87AD" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M208.6 84 L208.6 106" marker-end="url(#arr)"/>
+<path d="M208.6 137 L208.6 142.5 Q208.6 148 214.1 148 L570.9 148 Q576.4 148 576.4 153.5 L576.4 159" marker-end="url(#arr)"/>
+<path d="M576.4 190 L576.4 195.5 Q576.4 201 570.9 201 L214.1 201 Q208.6 201 208.6 206.5 L208.6 212" marker-end="url(#arr)"/>
+<path d="M286.3 228 L480.5 228 Q490.5 228 490.5 238 L490.5 273" marker-end="url(#arr)"/>
+<path d="M490.5 304 L490.5 326" marker-end="url(#arr)"/>
+<path d="M563.5 342 L680.9 342 Q690.9 342 690.9 332 L690.9 317" marker-end="url(#arr)"/>
+<path d="M690.9 286 L690.9 271 Q690.9 261 680.9 261 L496.5 261 Q490.5 261 490.5 267 L490.5 273" marker-end="url(#arr)"/>
+<path d="M490.5 358 L490.5 385"/>
+<path d="M490.5 385 L490.5 407" marker-end="url(#arr)"/>
+<path d="M490.5 438 L490.5 443.5 Q490.5 449 485 449 L128.2 449 Q122.7 449 122.7 454.5 L122.7 460" marker-end="url(#arr)"/>
+<path d="M286.3 228 L290.4 228 Q294.4 228 294.4 232.1 L294.4 273" marker-end="url(#arr)"/>
+<path d="M294.4 304 L294.4 326" marker-end="url(#arr)"/>
+<path d="M122.7 491 L122.7 496.5 Q122.7 502 128.2 502 L203.1 502 Q208.6 502 208.6 507.5 L208.6 513" marker-end="url(#arr)"/>
+</g>
+<g class="node start" data-node="n1"><circle cx="208.6" cy="76" r="8" fill="#12345A"/></g>
+<g class="node action" data-node="a"><rect x="120.9" y="106" width="175.4" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="208.6" y="125"><tspan font-weight="700" fill="#12345A">a</tspan> · bring the bike to the shop</tspan></text></g>
+<g class="node action" data-node="b"><rect x="471.3" y="159" width="210.1" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="576.4" y="178"><tspan font-weight="700" fill="#12345A">b</tspan> · look at the bike · write the quote</tspan></text></g>
+<g class="node decision" data-node="c"><rect x="130.9" y="212" width="155.4" height="32" rx="16" fill="#DEFEB3" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#12345A"><tspan x="208.6" y="231.5"><tspan font-weight="700" fill="#12345A">c</tspan> · accept the quote?</tspan></text></g>
+<text class="label" font-size="11" font-weight="600" fill="#46576A"><tspan x="495.5" y="267">yes</tspan></text>
+<g class="node action" data-node="d"><rect x="431.1" y="273" width="118.7" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="490.5" y="292"><tspan font-weight="700" fill="#12345A">d</tspan> · repair one part</tspan></text></g>
+<g class="node decision" data-node="f"><rect x="417.5" y="326" width="146" height="32" rx="16" fill="#DEFEB3" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#12345A"><tspan x="490.5" y="345.5"><tspan font-weight="700" fill="#12345A">f</tspan> · every part fixed?</tspan></text></g>
+<g class="node action backward" data-node="e"><rect x="583.5" y="286" width="214.7" height="31" rx="14" fill="#F0E8D8" stroke="#6A87AD" stroke-width="1.2" stroke-dasharray="4 3"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="690.9" y="305"><tspan font-weight="700" fill="#12345A">e</tspan> · order the missing part · wait for it</tspan></text></g>
+<text class="label" font-size="11" font-weight="600" fill="#46576A"><tspan x="568.5" y="336">no</tspan></text>
+<text class="label" font-size="11" font-weight="600" fill="#46576A"><tspan x="495.5" y="370">yes</tspan></text>
+<g class="node action" data-node="g"><rect x="448.8" y="407" width="83.4" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="490.5" y="426"><tspan font-weight="700" fill="#12345A">g</tspan> · test ride</tspan></text></g>
+<g class="node action" data-node="h"><rect x="46" y="460" width="153.4" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="122.7" y="479"><tspan font-weight="700" fill="#12345A">h</tspan> · pick up the bike · pay</tspan></text></g>
+<text class="label" font-size="11" font-weight="600" fill="#46576A"><tspan x="299.4" y="267">no</tspan></text>
+<g class="node action" data-node="i"><rect x="225.4" y="273" width="138.1" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="294.4" y="292"><tspan font-weight="700" fill="#12345A">i</tspan> · take the bike home</tspan></text></g>
+<g class="node end" data-node="n11"><circle cx="294.4" cy="337" r="10" fill="none" stroke="#12345A" stroke-width="1.8"/><path d="M290.4 333 l8 8 M298.4 333 l-8 8" stroke="#12345A" stroke-width="1.8" stroke-linecap="round"/></g>
+<g class="node stop" data-node="n12"><circle cx="208.6" cy="524" r="10" fill="none" stroke="#12345A" stroke-width="1.8"/><circle cx="208.6" cy="524" r="5.5" fill="#12345A"/></g>
+</svg>

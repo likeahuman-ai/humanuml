@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1035 520" width="1035" height="520" font-family="&apos;Libre Franklin&apos;, &apos;Helvetica Neue&apos;, Helvetica, Arial, sans-serif" data-diagram="coffee_order" data-theme="soft">
+<defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1.5 L9 5 L1 8.5" fill="none" stroke="#6A87AD" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker><filter id="lift" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#12345A" flood-opacity="0.13"/></filter></defs>
+<rect width="1035" height="520" fill="#FFF8E7"/>
+<g fill="none" stroke="#6A87AD" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M507.8 54 L507.8 76" marker-end="url(#arr)"/>
+<path d="M507.8 107 L507.8 129" marker-end="url(#arr)"/>
+<path d="M507.8 161 L507.8 166 Q507.8 171 502.8 171 L118.7 171 Q108.7 171 108.7 181 L108.7 196" marker-end="url(#arr)"/>
+<path d="M507.8 161 L507.8 166 Q507.8 171 502.8 171 L318.1 171 Q308.1 171 308.1 181 L308.1 196" marker-end="url(#arr)"/>
+<path d="M507.8 161 L507.8 166 Q507.8 171 512.8 171 L517.3 171 Q526.9 171 526.9 180.5 L526.9 196" marker-end="url(#arr)"/>
+<path d="M507.8 161 L507.8 166 Q507.8 171 512.8 171 L706.9 171 Q716.9 171 716.9 181 L716.9 196" marker-end="url(#arr)"/>
+<path d="M507.8 161 L507.8 166 Q507.8 171 512.8 171 L897 171 Q907 171 907 181 L907 196" marker-end="url(#arr)"/>
+<path d="M108.7 227 L108.7 237 Q108.7 247 118.7 247 L507.8 247"/>
+<path d="M308.1 227 L308.1 237 Q308.1 247 318.1 247 L507.8 247"/>
+<path d="M526.9 227 L526.9 237.5 Q526.9 247 517.3 247 L507.8 247"/>
+<path d="M716.9 227 L716.9 237 Q716.9 247 706.9 247 L507.8 247"/>
+<path d="M907 227 L907 237 Q907 247 897 247 L507.8 247"/>
+<path d="M507.8 253 L507.8 275" marker-end="url(#arr)"/>
+<path d="M507.8 307 L507.8 336" marker-end="url(#arr)"/>
+<path d="M573.2 291 L609.5 291 Q619.5 291 619.5 301 L619.5 336"/>
+<path d="M507.8 367 L507.8 387"/>
+<path d="M619.5 336 L619.5 377 Q619.5 387 609.5 387 L507.8 387"/>
+<path d="M507.8 393 L507.8 415" marker-end="url(#arr)"/>
+<path d="M507.8 446 L507.8 468" marker-end="url(#arr)"/>
+</g>
+<g class="node start" data-node="n1"><circle cx="507.8" cy="46" r="8" fill="#12345A"/></g>
+<g class="node action" data-node="n2"><rect x="419.2" y="76" width="177.3" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="507.8" y="95">ARRIVE AT THE COUNTER</tspan></text></g>
+<g class="node decision" data-node="a"><rect x="406.1" y="129" width="203.4" height="32" rx="16" fill="#DEFEB3" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#12345A"><tspan x="507.8" y="148.5"><tspan font-weight="700" fill="#12345A">a</tspan> · what does the guest want?</tspan></text></g>
+<text class="label" font-size="11" font-weight="600" fill="#46576A"><tspan x="113.7" y="190">espresso</tspan></text>
+<g class="node action" data-node="b"><rect x="46" y="196" width="125.4" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="108.7" y="215"><tspan font-weight="700" fill="#12345A">b</tspan> · pull a short shot</tspan></text></g>
+<text class="label" font-size="11" font-weight="600" fill="#46576A"><tspan x="313.1" y="190">flat white</tspan></text>
+<g class="node action" data-node="c"><rect x="197.4" y="196" width="221.4" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="308.1" y="215"><tspan font-weight="700" fill="#12345A">c</tspan> · pull a double shot · steam the milk</tspan></text></g>
+<text class="label" font-size="11" font-weight="600" fill="#46576A"><tspan x="531.9" y="190">filter</tspan></text>
+<g class="node action" data-node="d"><rect x="444.8" y="196" width="164.1" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="526.9" y="215"><tspan font-weight="700" fill="#12345A">d</tspan> · pour from the batch jug</tspan></text></g>
+<text class="label" font-size="11" font-weight="600" fill="#46576A"><tspan x="721.9" y="190">tea</tspan></text>
+<g class="node action" data-node="e"><rect x="634.9" y="196" width="164.1" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="716.9" y="215"><tspan font-weight="700" fill="#12345A">e</tspan> · pick a tin · set the timer</tspan></text></g>
+<text class="label" font-size="11" font-weight="600" fill="#46576A"><tspan x="912" y="190">something else</tspan></text>
+<g class="node action" data-node="f"><rect x="825" y="196" width="164.1" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="907" y="215"><tspan font-weight="700" fill="#12345A">f</tspan> · ask the guest for details</tspan></text></g>
+<circle class="merge" cx="507.8" cy="247" r="4" fill="#12345A"/>
+<g class="node decision" data-node="g"><rect x="442.5" y="275" width="130.7" height="32" rx="16" fill="#DEFEB3" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#12345A"><tspan x="507.8" y="294.5"><tspan font-weight="700" fill="#12345A">g</tspan> · food as well?</tspan></text></g>
+<text class="label" font-size="11" font-weight="600" fill="#46576A"><tspan x="512.8" y="330">yes</tspan></text>
+<g class="node action" data-node="h"><rect x="422.1" y="336" width="171.4" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="507.8" y="355"><tspan font-weight="700" fill="#12345A">h</tspan> · warm the pastry · plate it</tspan></text></g>
+<circle class="merge" cx="507.8" cy="387" r="4" fill="#12345A"/>
+<g class="node action" data-node="i"><rect x="443.5" y="415" width="128.7" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="507.8" y="434"><tspan font-weight="700" fill="#12345A">i</tspan> · take the payment</tspan></text></g>
+<g class="node stop" data-node="n12"><circle cx="507.8" cy="479" r="10" fill="none" stroke="#12345A" stroke-width="1.8"/><circle cx="507.8" cy="479" r="5.5" fill="#12345A"/></g>
+</svg>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 841.7 428" width="841.7" height="428" font-family="&apos;Libre Franklin&apos;, &apos;Helvetica Neue&apos;, Helvetica, Arial, sans-serif" data-diagram="launch_day" data-theme="soft">
+<defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1.5 L9 5 L1 8.5" fill="none" stroke="#6A87AD" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker><filter id="lift" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#12345A" flood-opacity="0.13"/></filter></defs>
+<rect width="841.7" height="428" fill="#FFF8E7"/>
+<g fill="none" stroke="#6A87AD" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M310.6 54 L310.6 76" marker-end="url(#arr)"/>
+<path d="M310.6 107 L310.6 129" marker-end="url(#arr)"/>
+<path d="M117.4 133 L117.4 155" marker-end="url(#arr)"/>
+<path d="M117.4 186 L117.4 208" marker-end="url(#arr)"/>
+<path d="M503.9 133 L503.9 155" marker-end="url(#arr)"/>
+<path d="M503.9 186 L503.9 208" marker-end="url(#arr)"/>
+<path d="M298.8 212 L298.8 234" marker-end="url(#arr)"/>
+<path d="M502.5 212 L502.5 234" marker-end="url(#arr)"/>
+<path d="M709 212 L709 234" marker-end="url(#arr)"/>
+<path d="M298.8 265 L298.8 279"/>
+<path d="M502.5 265 L502.5 279"/>
+<path d="M709 265 L709 279"/>
+<path d="M117.4 239 L117.4 297"/>
+<path d="M503.9 283 L503.9 297"/>
+<path d="M310.6 301 L310.6 323" marker-end="url(#arr)"/>
+<path d="M310.6 354 L310.6 376" marker-end="url(#arr)"/>
+</g>
+<g class="node bar" data-node="n7"><rect x="286.8" y="208" width="434.2" height="4" rx="2" fill="#12345A"/></g>
+<g class="node bar" data-node="n11"><rect x="286.8" y="279" width="434.2" height="4" rx="2" fill="#12345A"/></g>
+<g class="node bar" data-node="n3"><rect x="105.4" y="129" width="410.5" height="4" rx="2" fill="#12345A"/></g>
+<g class="node bar" data-node="n12"><rect x="105.4" y="297" width="410.5" height="4" rx="2" fill="#12345A"/></g>
+<g class="node start" data-node="n1"><circle cx="310.6" cy="46" r="8" fill="#12345A"/></g>
+<g class="node action" data-node="n2"><rect x="243.3" y="76" width="134.7" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="310.6" y="95">LAUNCH MORNING</tspan></text></g>
+<g class="node action" data-node="a"><rect x="46" y="155" width="142.7" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="117.4" y="174"><tspan font-weight="700" fill="#12345A">a</tspan> · publish the website</tspan></text></g>
+<g class="node action" data-node="b"><rect x="47.3" y="208" width="140.1" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="117.4" y="227"><tspan font-weight="700" fill="#12345A">b</tspan> · switch on the shop</tspan></text></g>
+<g class="node action" data-node="c"><rect x="431.8" y="155" width="144.1" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="503.9" y="174"><tspan font-weight="700" fill="#12345A">c</tspan> · send the newsletter</tspan></text></g>
+<g class="node action" data-node="d"><rect x="214.7" y="234" width="168.1" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="298.8" y="253"><tspan font-weight="700" fill="#12345A">d</tspan> · post on the first channel</tspan></text></g>
+<g class="node action" data-node="e"><rect x="408.8" y="234" width="187.4" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="502.5" y="253"><tspan font-weight="700" fill="#12345A">e</tspan> · post on the second channel</tspan></text></g>
+<g class="node action" data-node="f"><rect x="622.3" y="234" width="173.4" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="709" y="253"><tspan font-weight="700" fill="#12345A">f</tspan> · answer the first questions</tspan></text></g>
+<g class="node action" data-node="g"><rect x="235.6" y="323" width="150.1" height="31" rx="14" fill="#FFFFFF" stroke="none" filter="url(#lift)"/><text text-anchor="middle" font-size="12" fill="#1C2B3A"><tspan x="310.6" y="342"><tspan font-weight="700" fill="#12345A">g</tspan> · count the first orders</tspan></text></g>
+<g class="node stop" data-node="n14"><circle cx="310.6" cy="387" r="10" fill="none" stroke="#12345A" stroke-width="1.8"/><circle cx="310.6" cy="387" r="5.5" fill="#12345A"/></g>
+</svg>
