@@ -7,7 +7,7 @@ const USAGE: &str = "humanuml: flow diagrams as plain text
 usage:
   humanuml check <files>...      parse; errors by line and column, with hints
   humanuml json <file>           the parsed flow as JSON
-  humanuml render <file> -o out.svg
+  humanuml render <file> -o out.svg [--theme classic|soft|navy|ink]
 
 A file is a .puml file or a .md file with ```plantuml fences.";
 
@@ -91,10 +91,14 @@ fn json(files: &[String]) -> ExitCode {
 fn render(args: &[String]) -> ExitCode {
     let mut files = vec![];
     let mut out = None;
+    let mut theme = String::from("classic");
     let mut i = 0;
     while i < args.len() {
         if args[i] == "-o" {
             out = args.get(i + 1).cloned();
+            i += 2;
+        } else if args[i] == "--theme" {
+            theme = args.get(i + 1).cloned().unwrap_or_default();
             i += 2;
         } else {
             files.push(args[i].clone());
@@ -103,6 +107,10 @@ fn render(args: &[String]) -> ExitCode {
     }
     let Some(out) = out else {
         eprintln!("{}", USAGE);
+        return ExitCode::from(2);
+    };
+    let Some(th) = humanuml::svg::Theme::named(&theme) else {
+        eprintln!("unknown theme `{}`; themes: {}", theme, humanuml::svg::Theme::names().join(", "));
         return ExitCode::from(2);
     };
     if files.is_empty() {
@@ -138,7 +146,7 @@ fn render(args: &[String]) -> ExitCode {
             continue;
         };
         let m = humanuml::model::build(&d);
-        let svg = humanuml::svg::render(&m, &d);
+        let svg = humanuml::svg::render_with(&m, &d, &th);
         let path = if many { format!("{}/{}.svg", out, d.name) } else { out.clone() };
         if let Err(e) = std::fs::write(&path, svg) {
             eprintln!("{}: cannot write: {}", path, e);
